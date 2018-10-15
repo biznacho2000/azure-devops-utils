@@ -267,14 +267,14 @@ if [[ ${jenkins_release_type} == 'verified' ]]; then
   wget -q "https://pkg.jenkins.io/debian-stable/binary/${deb_file}"
   if [[ -f ${deb_file} ]]; then
     sudo dpkg -i ${deb_file}
-    sudo apt-get install -f --yes
+    sudo apt-get install -f --yes --allow-unauthenticated
   else
     echo "Failed to download ${deb_file}. The initialization is terminated!"
     exit -1
   fi
 else
-  sudo apt-get install jenkins --yes
-  sudo apt-get install jenkins --yes # sometime the first apt-get install jenkins command fails, so we try it twice
+  sudo apt-get install jenkins --yes --allow-unauthenticated
+  sudo apt-get install jenkins --yes --allow-unauthenticated # sometime the first apt-get install jenkins command fails, so we try it twice
 fi
 
 retry_until_successful sudo test -f /var/lib/jenkins/secrets/initialAdminPassword
@@ -451,7 +451,7 @@ elif [ "${cloud_agents}" == 'aci' ]; then
 fi
 
 #install nginx
-sudo apt-get install nginx --yes
+sudo apt-get install nginx --yes --allow-unauthenticated
 
 #configure nginx
 echo "${nginx_reverse_proxy_conf}" | sudo tee /etc/nginx/sites-enabled/default > /dev/null
@@ -477,5 +477,5 @@ sudo service jenkins restart
 retry_until_successful run_util_script "jenkins/run-cli-command.sh" -c "version"
 
 #install common tools
-sudo apt-get install git --yes
-sudo apt-get install azure-cli --yes
+sudo apt-get install git --yes --allow-unauthenticated
+sudo apt-get install azure-cli --yes --allow-unauthenticated
