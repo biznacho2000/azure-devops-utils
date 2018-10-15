@@ -255,7 +255,7 @@ sudo add-apt-repository ppa:openjdk-r/ppa --yes
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
 wget -q -O - https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
 sudo apt-get install apt-transport-https
-sudo apt-get update --yes
+sudo apt-get update --yes --allow-unauthenticated
 
 #install openjdk8
 sudo apt-get install openjdk-8-jre openjdk-8-jre-headless openjdk-8-jdk --yes
